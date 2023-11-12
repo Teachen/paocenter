@@ -1,18 +1,29 @@
+/*
+ * @Author: chenjin 1185941165@qq.com
+ * @Date: 2023-11-07 22:26:36
+ * @LastEditors: chenjin 1185941165@qq.com
+ * @LastEditTime: 2023-11-12 18:31:58
+ * @FilePath: \user-center-frontend-master\src\plugins\globalRequest.ts
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ */
 /**
  * request 网络请求工具
  * 更详细的 api 文档: https://github.com/umijs/umi-request
  */
-import {extend} from 'umi-request';
-import {message} from "antd";
-import {history} from "@@/core/history";
-import {stringify} from "querystring";
+import { extend } from 'umi-request';
+import { message } from 'antd';
+import { history } from '@@/core/history';
+import { stringify } from 'querystring';
 
 /**
  * 配置request请求时的默认参数
  */
 const request = extend({
   credentials: 'include', // 默认请求是否带上cookie
-  prefix: process.env.NODE_ENV === 'production' ? 'http://user-backend.code-nav.cn' : undefined
+  prefix:
+    process.env.NODE_ENV === 'production'
+      ? 'https://user-center-76469-5-1304297249.sh.run.tcloudbase.com'
+      : undefined,
   // requestType: 'form',
 });
 
@@ -20,7 +31,7 @@ const request = extend({
  * 所以请求拦截器
  */
 request.interceptors.request.use((url, options): any => {
-  console.log(`do request url = ${url}`)
+  console.log(`do request url = ${url}`);
 
   return {
     url,
@@ -48,7 +59,7 @@ request.interceptors.response.use(async (response, options): Promise<any> => {
       }),
     });
   } else {
-    message.error(res.description)
+    message.error(res.description);
   }
   return res.data;
 });
